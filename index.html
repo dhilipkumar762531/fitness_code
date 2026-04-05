@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX FIT — Online Fitness Training</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="logo">APEX<span>FIT</span></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#trainers">Trainers</a></li>
+      <li><a href="#dashboard">My Dashboard</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="cta-nav" onclick="openModal('signup')">Get Started</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#programs" onclick="closeMobile()">Programs</a>
+  <a href="#trainers" onclick="closeMobile()">Trainers</a>
+  <a href="#dashboard" onclick="closeMobile()">My Dashboard</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <button class="cta-nav" onclick="openModal('signup');closeMobile()">Get Started</button>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Online Fitness Training</div>
+    <h1 class="hero-title">BREAK YOUR<br><span>LIMITS.</span></h1>
+    <p class="hero-sub">Expert-coached training plans, live sessions, and community support — all from wherever you are.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="openModal('signup')">Start Free Trial</button>
+      <a href="#programs" class="btn-ghost">View Programs</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">12K+</span><span class="stat-label">Active Members</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">98%</span><span class="stat-label">Satisfaction Rate</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Expert Trainers</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card floating">
+      <div class="hcard-label">Today's Workout</div>
+      <div class="hcard-title">Upper Body Blast</div>
+      <div class="hcard-meta">45 min &nbsp;·&nbsp; 320 kcal</div>
+      <div class="hcard-bar"><div class="hcard-fill" style="width:68%"></div></div>
+      <div class="hcard-pct">68% Complete</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES STRIP -->
+<section class="features-strip">
+  <div class="feat"><div class="feat-icon">⚡</div><div><strong>Live Sessions</strong><p>Daily live-streamed workouts</p></div></div>
+  <div class="feat"><div class="feat-icon">🎯</div><div><strong>Custom Plans</strong><p>AI-tailored to your goals</p></div></div>
+  <div class="feat"><div class="feat-icon">📊</div><div><strong>Progress Tracking</strong><p>Detailed analytics dashboard</p></div></div>
+  <div class="feat"><div class="feat-icon">🤝</div><div><strong>Community</strong><p>24/7 peer & coach support</p></div></div>
+</section>
+
+<!-- PROGRAMS SECTION -->
+<section class="programs" id="programs">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Programs</div>
+      <h2>Find Your<br><em>Perfect Plan</em></h2>
+      <p>Structured programs designed for every level — from first-timers to seasoned athletes.</p>
+    </div>
+
+    <!-- SEARCH & FILTER -->
+    <div class="prog-controls">
+      <input type="text" id="programSearch" placeholder="Search programs…" oninput="filterPrograms()">
+      <div class="filter-tabs">
+        <button class="filter-btn active" onclick="filterByLevel(this,'all')">All</button>
+        <button class="filter-btn" onclick="filterByLevel(this,'beginner')">Beginner</button>
+        <button class="filter-btn" onclick="filterByLevel(this,'intermediate')">Intermediate</button>
+        <button class="filter-btn" onclick="filterByLevel(this,'advanced')">Advanced</button>
+      </div>
+      <button class="btn-add-program" onclick="openModal('addProgram')">+ Add Program</button>
+    </div>
+
+    <div class="programs-grid" id="programsGrid"></div>
+  </div>
+</section>
+
+<!-- TRAINERS SECTION -->
+<section class="trainers" id="trainers">
+  <div class="section-inner">
+    <div class="section-header light">
+      <div class="section-tag accent">Trainers</div>
+      <h2>Meet Your<br><em>Coaches</em></h2>
+      <p>Certified, experienced, and passionate about your transformation.</p>
+    </div>
+    <div class="trainers-grid" id="trainersGrid"></div>
+  </div>
+</section>
+
+<!-- DASHBOARD / CRUD -->
+<section class="dashboard" id="dashboard">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">My Dashboard</div>
+      <h2>Track Your<br><em>Journey</em></h2>
+      <p>Log workouts, monitor progress, and manage your fitness records.</p>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Workout Log CRUD -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <h3>Workout Log</h3>
+          <button class="icon-btn" onclick="openModal('addWorkout')">+ Log Workout</button>
+        </div>
+        <div class="dash-table-wrap">
+          <table class="dash-table">
+            <thead><tr><th>Date</th><th>Workout</th><th>Duration</th><th>Calories</th><th>Actions</th></tr></thead>
+            <tbody id="workoutTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Goals CRUD -->
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <h3>My Goals</h3>
+          <button class="icon-btn" onclick="openModal('addGoal')">+ Add Goal</button>
+        </div>
+        <div id="goalsList" class="goals-list"></div>
+      </div>
+
+      <!-- Stats -->
+      <div class="dash-card span2">
+        <div class="dash-card-header"><h3>Weekly Overview</h3></div>
+        <div class="stats-row" id="statsRow"></div>
+        <div class="progress-section">
+          <div class="prog-label-row"><span>Weekly Goal Progress</span><span id="weeklyPct">0%</span></div>
+          <div class="prog-track"><div class="prog-bar-inner" id="weeklyBar"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-tag">Success Stories</div>
+      <h2>Real People,<br><em>Real Results</em></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="tcard">
+        <div class="tcard-quote">"Lost 18kg in 5 months. The structured plans and live check-ins made all the difference."</div>
+        <div class="tcard-author"><div class="tcard-avatar" style="background:#e8f5e9;color:#2e7d32">AK</div><div><strong>Anjali K.</strong><span>Chennai, India</span></div></div>
+      </div>
+      <div class="tcard featured">
+        <div class="tcard-quote">"Best investment I made for my health. Trainers are responsive and the community keeps you accountable."</div>
+        <div class="tcard-author"><div class="tcard-avatar" style="background:#e3f2fd;color:#1565c0">MR</div><div><strong>Marcus R.</strong><span>London, UK</span></div></div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-quote">"Went from couch to completing a 5K in 8 weeks. The beginner program is genuinely perfect."</div>
+        <div class="tcard-author"><div class="tcard-avatar" style="background:#fce4ec;color:#c62828">SP</div><div><strong>Sara P.</strong><span>Sydney, AU</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner contact-grid">
+    <div class="contact-info">
+      <div class="section-tag">Contact</div>
+      <h2>Ready to<br><em>Start?</em></h2>
+      <p>Have questions? We'll get back to you within 24 hours.</p>
+      <div class="contact-details">
+        <div class="cd-item">📧 hello@apexfit.com</div>
+        <div class="cd-item">📱 +91 98765 43210</div>
+        <div class="cd-item">🕐 Mon–Sat, 6am–10pm IST</div>
+      </div>
+    </div>
+    <div class="contact-form-wrap">
+      <form id="contactForm" onsubmit="submitContact(event)">
+        <div class="form-row">
+          <div class="form-group"><label>Name</label><input type="text" id="cName" placeholder="Your name" required></div>
+          <div class="form-group"><label>Email</label><input type="email" id="cEmail" placeholder="your@email.com" required></div>
+        </div>
+        <div class="form-group"><label>Subject</label>
+          <select id="cSubject">
+            <option>General Enquiry</option>
+            <option>Program Info</option>
+            <option>Billing</option>
+            <option>Technical Support</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea id="cMessage" rows="4" placeholder="How can we help?" required></textarea></div>
+        <button type="submit" class="btn-primary full-width">Send Message</button>
+        <div id="contactMsg" class="form-feedback"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">APEX<span>FIT</span></div>
+      <p>Empowering your fitness journey, wherever you are.</p>
+    </div>
+    <div class="footer-links">
+      <div><strong>Programs</strong><a href="#">Beginner</a><a href="#">Intermediate</a><a href="#">Advanced</a></div>
+      <div><strong>Company</strong><a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a></div>
+      <div><strong>Support</strong><a href="#">FAQ</a><a href="#">Contact</a><a href="#">Privacy</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 ApexFit. All rights reserved.</div>
+</footer>
+
+<!-- MODALS CONTAINER -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+  <div class="modal" id="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
