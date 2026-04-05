@@ -1,5 +1,5 @@
 /* ================================================
-   APEX FIT — app.js
+   DK FITNESS — app.js
    Full CRUD: Programs, Workouts, Goals
    + Navbar scroll, modal system, toast, filters
 ================================================ */
@@ -75,10 +75,12 @@ window.addEventListener('scroll', () => {
 
 document.getElementById('hamburger').addEventListener('click', () => {
   document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('active');
 });
 
 function closeMobile() {
   document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('active');
 }
 
 /* ══════════════════════════════════════
